@@ -8,7 +8,7 @@ class ProfileOverview extends React.Component {
     return (
       <Layout>
         <div>
-          <p>Hello world</p>
+          <p>User Add</p>
         </div>  
       </Layout>
     )

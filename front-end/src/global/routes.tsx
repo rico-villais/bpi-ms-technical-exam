@@ -3,15 +3,22 @@ import {
 } from "react-router-dom";
 
 // import router
+import UserRouter from '../pages/user/UserRouter';
+
+// components
 import Forbidden from "./Forbidden";
-import ProfileRouter from '../pages/profile/ProfileRouter';
+import Login from "../pages/login/Login";
 
 const router = createBrowserRouter([
   {
     path: "/*",
     element: <Forbidden/>,
   },
-  ...ProfileRouter
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  ...UserRouter
 ]);
 
 export default router;

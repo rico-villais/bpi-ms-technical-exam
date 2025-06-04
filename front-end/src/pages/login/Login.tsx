@@ -1,7 +1,7 @@
 import * as React from "react";
 
 // componets 
-import Layout from "../../../global/Layout";
+import Layout from "../../global/Layout";
 
 // style
 import './loginStyles.scss';
