@@ -1,20 +1,19 @@
 import * as React from "react";
 
 // componets 
-import Layout from "../../../global/Layout";
+import UserLayout from "./UserLayout";
 
-class ProfileOverview extends React.Component {
+class UserUpdate extends React.Component {
   render(): React.ReactNode {
     return (
-      <Layout>
+      <UserLayout tabName="Update Record">
         <div>
-          <p>User Update</p>
+          <p>Account Add</p>
         </div>  
-      </Layout>
+      </UserLayout>
     )
   }
 }
 
 
-
-export default ProfileOverview;
+export default UserUpdate;
