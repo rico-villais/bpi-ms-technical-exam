@@ -1,10 +1,11 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 
 // componets 
 import UserLayout from "./UserLayout";
 
 // libraries
-import { Table } from 'antd';
+import { Table, Image } from 'antd';
 import type { TableColumnsType } from 'antd';
 import { createStyles } from 'antd-style';
 
@@ -28,88 +29,84 @@ const useStyle = createStyles(({ css, token }) => {
 
 interface DataType {
   key: React.Key;
+  photo: React.ReactNode | string | null;
   name: string;
-  age: number;
-  address: string;
+  username: string;
+  country: string;
+  email: string;
+  accountType: string;
 }
 
 const columns: TableColumnsType<DataType> = [
   {
-    title: 'Full Name',
+    title: 'PHOTO',
+    width: 80,
+    dataIndex: 'photo',
+    key: 'photo',
+    fixed: 'left',
+  },
+  {
+    title: 'NAME',
     width: 100,
     dataIndex: 'name',
     key: 'name',
     fixed: 'left',
   },
   {
-    title: 'Age',
-    width: 100,
-    dataIndex: 'age',
-    key: 'age',
-    fixed: 'left',
-  },
-  {
-    title: 'Column 1',
-    dataIndex: 'address',
-    key: '1',
+    title: 'USERNAME',
+    dataIndex: 'username',
+    key: 'username',
     width: 150,
   },
   {
-    title: 'Column 2',
-    dataIndex: 'address',
-    key: '2',
+    title: 'COUNTRY',
+    dataIndex: 'country',
+    key: 'country',
     width: 150,
   },
   {
-    title: 'Column 3',
-    dataIndex: 'address',
-    key: '3',
+    title: 'EMAIL',
+    dataIndex: 'email',
+    key: 'email',
     width: 150,
   },
   {
-    title: 'Column 4',
-    dataIndex: 'address',
-    key: '4',
+    title: 'ACCOUNT TYPE',
+    dataIndex: 'accountType',
+    key: 'accountType',
     width: 150,
   },
   {
-    title: 'Column 5',
-    dataIndex: 'address',
-    key: '5',
-    width: 150,
-  },
-  {
-    title: 'Column 6',
-    dataIndex: 'address',
-    key: '6',
-    width: 150,
-  },
-  {
-    title: 'Column 7',
-    dataIndex: 'address',
-    key: '7',
-    width: 150,
-  },
-  {
-    title: 'Action',
-    key: 'operation',
-    fixed: 'right',
-    width: 100,
-    render: () => <a>action</a>,
+    title: 'ACTION',
+    dataIndex: 'action',
+    key: 'action',
+    width: 150
   },
 ];
 
 const dataSource = Array.from({ length: 100 }).map<DataType>((_, i) => ({
   key: i,
-  name: `Edward King ${i}`,
-  age: 32,
-  address: `London, Park Lane no. ${i}`,
+  photo: (
+  <div className="user-image">
+    <Image src="/gallery.png" />
+  </div>),
+  name: `name ${i}`,
+  username: `username ${i}`,
+  country: `country ${i}`,
+  email: `admin${i}@gmail.com`,
+  accountType: `account type ${i}`,
+  action: (<div><Link to={`/user/update/${i}`} style={{color:"orange"}}>Update</Link> <Link to="/user/delete" style={{color:"red"}}>Delete</Link></div>)
 }));
 
 const UserList: React.FC = () => {
   const { styles } = useStyle();
+
+  console.log("dataSource", dataSource)
   return (
     <UserLayout tabName="Records">
+      <div className="user-list-option-menu">
+        <Link to="/user/add" className="add-button"> ADD ACCOUNT </Link>
+      </div>
       <Table<DataType>
         className={styles.customTable}
         columns={columns}

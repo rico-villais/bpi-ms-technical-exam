@@ -13,7 +13,7 @@ const router = [
     element: <UserAdd/>,
   },
   {
-    path: "/user/update",
+    path: "/user/update/:id",
     element: <UserUpdate />,
   },
 ];

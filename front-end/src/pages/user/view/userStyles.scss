@@ -10,3 +10,57 @@
         }
     }
 }
+
+.user-list-option-menu {
+    display: grid;
+    justify-content: end;
+    margin: 1em 0;
+}
+
+.ant-table-body {
+    max-height: 450px !important;
+}
+
+.ant-pagination-options {
+    display: none;
+}
+
+.add-button {
+    background: #1677ff;
+    padding: 6px 15px;
+    border-radius: 5px;
+    color: #ffffff;
+    font-size: 15px;
+}
+
+.user-image {
+    height: 100%;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    grid-template-rows: 45px 24px;
+    grid-template-columns: 66px;
+    background: #bdc3c7;
+    margin: 0px 5px;
+    color: #ffffff;
+
+    > div {
+        text-align: center;
+
+        img {    margin-top: 25px; }
+    }
+}
+
+form {
+    .ant-form-item-label {
+        text-align: left !important;
+    }
+    input {
+        text-align: left !important;
+        margin: 0 !important;
+        padding: 3px 1em !important;
+        width: 100% !important;
+        background-color: #ffffff !important;
+    }
+}
