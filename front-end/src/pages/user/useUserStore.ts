@@ -30,7 +30,7 @@ type Store = {
     loading: boolean;
     lastUpdated: number | null;
     didInvalidate: boolean;
-    login: () => void;
+    login: (user:any) => void;
     logout: () => void;
     fetchListIfNeeded: () => void;
     fetchList: () => void;
@@ -55,14 +55,16 @@ const userStore = create<Store>((set, get) => ({
     loading: false,
     lastUpdated: null,
     didInvalidate: false,
-    login: () => {
-        axios.post(`http://${baseUrl}/api/login`, { email: "rc.bilyaiz@gmail.com", password: "admin" })
+    login: (user) => {
+        axios.post(`http://${baseUrl}/api/login`, user)
         .then(json => {
             console.log("json.data", json.data)
             if (json.data && json.data.success) {
                 set({ loggedInUser: true });
                 localStorage.setItem('loggedInUser', 'true');
                 window.location.replace('/user');
+            } else {
+                alert('failed to login')
             }
         })
         .catch(error => console.log('login err', error));
