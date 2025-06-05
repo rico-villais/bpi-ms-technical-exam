@@ -31,6 +31,7 @@ type Store = {
     lastUpdated: number | null;
     didInvalidate: boolean;
     login: () => void;
+    logout: () => void;
     fetchListIfNeeded: () => void;
     fetchList: () => void;
     invalidateList: () => void;
@@ -48,7 +49,7 @@ const shouldFetchList = (state: Store) => {
 }
 
 const userStore = create<Store>((set, get) => ({
-    loggedInUser: true,
+    loggedInUser: localStorage.getItem('loggedInUser') === 'true',
     user: defaultState,
     list: [],
     loading: false,
@@ -57,9 +58,22 @@ const userStore = create<Store>((set, get) => ({
     login: () => {
         axios.post(`http://${baseUrl}/api/login`, { email: "rc.bilyaiz@gmail.com", password: "admin" })
         .then(json => {
+            console.log("json.data", json.data)
             if (json.data && json.data.success) {
-                set({ loggedInUser: true })
+                set({ loggedInUser: true });
+                localStorage.setItem('loggedInUser', 'true');
                 window.location.replace('/user');
+            }
+        })
+        .catch(error => console.log('login err', error));
+    },
+    logout: () => {
+        axios.post(`http://${baseUrl}/api/logout`, {})
+        .then(json => {
+            if (json.data && json.data.success) {
+                set({ loggedInUser: false });
+                localStorage.setItem('loggedInUser', 'false');
+                window.location.replace('/login');
             }
         })
         .catch(error => console.log('login err', error));

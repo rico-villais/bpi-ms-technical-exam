@@ -31,6 +31,12 @@ app.post('/api/login', async (req, res) => {
     else res.send({ success: true });
 });
 
+app.post('/api/logout', async (req, res) => {
+    const { error } = await supabase.auth.signOut()
+    if (error) res.send({ success: false });
+    else res.send({ success: true });
+});
+
 app.get('/get-loggedinuser', async (req, res) => {
     const { data } = await supabase.auth.getUser();
     if (data.user && data.user.id) {
