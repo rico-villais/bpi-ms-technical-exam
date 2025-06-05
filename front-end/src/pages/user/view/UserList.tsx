@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import UserLayout from "./UserLayout";
 
 // libraries
-import { Table, Image } from 'antd';
+import { Table, Image, Button } from 'antd';
 import type { TableColumnsType } from 'antd';
 import { createStyles } from 'antd-style';
 
@@ -103,7 +103,7 @@ const UserList: React.FC = () => {
     country: _.country,
     email: _.email,
     accountType: _.accounttype,
-    action: (<div><Link to={`/user/update?id=${_.id}`} style={{color:"orange"}}>Update</Link> <Link to="/user/delete" style={{color:"red"}}>Delete</Link></div>)
+    action: (<div><Link to={`/user/update?id=${_.id}`} style={{color:"orange"}}>Update</Link><Button onClick={() => userStore.delete(Number(_.id))} type="link" style={{color:"red"}}>Delete</Button></div>)
   }));
 
   return (

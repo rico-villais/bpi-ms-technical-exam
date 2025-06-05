@@ -77,6 +77,14 @@ app.put('/api/update/:id', async (req, res) => {
     res.send({ success: true, user: req.body });
 });
 
+app.delete('/api/delete/:id', async (req, res) => {
+    const response = await supabase
+    .from('users')
+    .delete()
+    .eq('id', req.params.id)
+    res.send({ success: true, user: response });
+});
+
 app.get('/', (req, res) => {
     res.send("Hello I am working my friend Supabase <3");
 });

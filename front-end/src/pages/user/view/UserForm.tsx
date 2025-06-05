@@ -1,7 +1,7 @@
 import * as React from "react";
 
 // libraries
-import {  Button, Form, Input  } from 'antd';
+import {  Button, Form, Input, Select } from 'antd';
 
 // store
 import useUserStore from "../useUserStore";
@@ -82,7 +82,11 @@ class UserForm extends React.Component<IUserForm, State> {
                     name="accounttype"
                     rules={[{ required: true, message: 'Please input your account type!' }]}
                 >
-                <Input />
+                    <Select
+                        defaultValue="Team Member"
+                        options={[{ value: 'Team Member', label: 'Team Member' }, { value: 'System Admin', label: 'System Admin' }]}
+                    >
+                    </Select>
                 </Form.Item>
 
                 <Form.Item

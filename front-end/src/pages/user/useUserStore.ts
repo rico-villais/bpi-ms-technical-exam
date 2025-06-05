@@ -37,6 +37,7 @@ type Store = {
     create: (newUser:IUSER) => void;
     getUserById: (id:number) => void;
     update: (updateUser:IUSER) => void;
+    delete: (id:number) => void;
 }
 
 const shouldFetchList = (state: Store) => {
@@ -113,6 +114,16 @@ const userStore = create<Store>((set, get) => ({
             }
         })
         .catch(error => console.log('login err', error));
+    },
+    delete: async (id) => {
+        const response = await axios.delete(`http://${baseUrl}/api/delete/${id}`);
+        if (response.data.success) {
+            const currentList:IUSER[] = get().list.filter(item => {
+                if (item.id != id) return item
+                else return false;
+            });
+            set({ list: currentList });
+        }
     }
 }));
 

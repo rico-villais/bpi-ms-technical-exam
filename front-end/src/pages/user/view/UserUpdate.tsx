@@ -16,5 +16,4 @@ class UserUpdate extends React.Component {
   }
 }
 
-
 export default UserUpdate;
