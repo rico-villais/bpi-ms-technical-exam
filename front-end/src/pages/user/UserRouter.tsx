@@ -17,9 +17,10 @@ const router = [
     element: <UserAdd/>,
   },
   {
-    path: "/user/update/:id",
+    path: "/user/update",
     element: <UserUpdate />,
   },
+  
 ];
 
 export default router;

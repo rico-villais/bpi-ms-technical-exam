@@ -1,6 +1,9 @@
 import {
   createBrowserRouter,
-} from "react-router-dom";
+  createRoutesFromElements,
+  Route,
+} from 'react-router-dom';
+
 
 // import router
 import UserRouter from '../pages/user/UserRouter';
@@ -9,16 +12,17 @@ import UserRouter from '../pages/user/UserRouter';
 import Forbidden from "./Forbidden";
 import Login from "../pages/user/Login";
 
-const router = createBrowserRouter([
-  {
-    path: "/*",
-    element: <Forbidden/>,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  ...UserRouter
-]);
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route>
+        <Route path='/*' element={<Forbidden/>}></Route>
+        <Route path='/login' element={<Login/>}></Route>
+        { UserRouter.map((item, i) => <Route key={i} path={item.path} element={item.element} /> )}
+      </Route>
+  )
+)
+
+console.log("router", router)
+
 
 export default router;

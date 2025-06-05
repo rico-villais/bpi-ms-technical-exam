@@ -103,9 +103,8 @@ const UserList: React.FC = () => {
     country: _.country,
     email: _.email,
     accountType: _.accounttype,
-    action: (<div><Link to={`/user/update/${i}`} style={{color:"orange"}}>Update</Link> <Link to="/user/delete" style={{color:"red"}}>Delete</Link></div>)
+    action: (<div><Link to={`/user/update?id=${_.id}`} style={{color:"orange"}}>Update</Link> <Link to="/user/delete" style={{color:"red"}}>Delete</Link></div>)
   }));
-
 
   return (
     <UserLayout tabName="Records">

@@ -4,6 +4,7 @@ import { default as axios } from 'axios';
 const baseUrl = 'localhost:3001';
 
 interface IUSER {
+    id?: number;
     photo?: string | null;
     firstname: string;
     lastname: string;
@@ -34,6 +35,8 @@ type Store = {
     fetchList: () => void;
     invalidateList: () => void;
     create: (newUser:IUSER) => void;
+    getUserById: (id:number) => void;
+    update: (updateUser:IUSER) => void;
 }
 
 const shouldFetchList = (state: Store) => {
@@ -86,6 +89,25 @@ const userStore = create<Store>((set, get) => ({
                 if (json.data.user) {
                     currentList.push(json.data.user);
                 }
+                set({ list: currentList });
+                window.location.replace('/user');
+            }
+        })
+        .catch(error => console.log('login err', error));
+    },
+    getUserById: async (id) => {
+        const response = await axios.get(`http://${baseUrl}/api/user/${id}`);
+        return response.data.user;
+    },
+    update: (updateUser) => {
+        console.log('ey', updateUser)
+        axios.put(`http://${baseUrl}/api/update/${updateUser.id}`, updateUser)
+        .then(json => {
+            if (json.data.user) {            
+                const currentList:IUSER[] = get().list.map(item => {
+                    if (item.id == json.data.user.id) return json.data.user;
+                    else return item;
+                });
                 set({ list: currentList });
                 window.location.replace('/user');
             }

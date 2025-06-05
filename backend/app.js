@@ -26,7 +26,6 @@ app.use(cors({
 }));
 
 app.post('/api/login', async (req, res) => {
-    console.log('login', req.body);
     const { error } = await supabase.auth.signInWithPassword(req.body);
     if (error) res.send({ success: false });
     else res.send({ success: true });
@@ -48,12 +47,19 @@ app.get('/get-loggedinuser', async (req, res) => {
 });
 
 app.get('/api/users', async (req, res) => {
-    console.log("supabase", supabase)
     const response = await supabase
     .from('users')
     .select()
-    console.log("response", response)
     res.send({ success: true, users: response.data });
+});
+
+app.get('/api/user/:id', async (req, res) => {
+    const response = await supabase
+    .from('users')
+    .select()
+    .match({ id: req.params.id })
+    .single()            
+    res.send({ success: true, user: response.data });
 });
 
 app.post('/api/create', async (req, res) => {
@@ -61,6 +67,14 @@ app.post('/api/create', async (req, res) => {
     .from('users')
     .insert(req.body)
     res.send({ success: true, user: statusText === "Created" && req.body });
+});
+
+app.put('/api/update/:id', async (req, res) => {
+    const { error } = await supabase
+    .from('users')
+    .update(req.body)
+    .match({ id: req.params.id });
+    res.send({ success: true, user: req.body });
 });
 
 app.get('/', (req, res) => {
