@@ -5,6 +5,10 @@ import UserUpdate from "./view/UserUpdate";
 
 const router = [
   {
+    path: "/",
+    element: <UserList />,
+  },
+  {
     path: "/user",
     element: <UserList />,
   },

@@ -6,14 +6,24 @@ import Layout from "../../../global/Layout";
 // style
 import './userStyles.scss'
 
+// store
+import useUserStore from "../useUserStore";
+
 interface IUserLayout {
     children: React.ReactNode;
     tabName: string;
 }
 
 class UserLayout extends React.Component<IUserLayout> {
+    constructor(props:any) {
+        super(props);
+    }
+
+    componentDidMount(): void {
+        useUserStore.getState().fetchListIfNeeded();
+    }
+
     render(): React.ReactNode {
-        console.log(this.props)
         return (
             <Layout>
                 <div className="user-layout">

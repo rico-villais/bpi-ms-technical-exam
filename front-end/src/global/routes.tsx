@@ -7,7 +7,7 @@ import UserRouter from '../pages/user/UserRouter';
 
 // components
 import Forbidden from "./Forbidden";
-import Login from "../pages/login/Login";
+import Login from "../pages/user/Login";
 
 const router = createBrowserRouter([
   {

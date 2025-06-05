@@ -6,8 +6,12 @@ import Layout from "../../global/Layout";
 // style
 import './loginStyles.scss';
 
+// store
+import useUserStore from "./useUserStore";
+
 class ProfileOverview extends React.Component {
   render(): React.ReactNode {
+    
     return (
       <Layout>
         <div>
@@ -17,7 +21,7 @@ class ProfileOverview extends React.Component {
                     <div className="form-body">
                         <input type="text" id="login" className="fadeIn second" name="login" placeholder="login" />
                         <input type="text" id="password" className="fadeIn third" name="login" placeholder="password" />
-                        <input type="submit" className="fadeIn fourth" value="Log In" />
+                        <button onClick={() => useUserStore.getState().login()}>Login</button>
                     </div>
                 </div>
             </div>

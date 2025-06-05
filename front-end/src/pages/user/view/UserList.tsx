@@ -9,6 +9,9 @@ import { Table, Image } from 'antd';
 import type { TableColumnsType } from 'antd';
 import { createStyles } from 'antd-style';
 
+// store
+import useUserStore from "../useUserStore";
+
 const useStyle = createStyles(({ css, token }) => {
   console.log("token", token)
   return {
@@ -84,24 +87,26 @@ const columns: TableColumnsType<DataType> = [
   },
 ];
 
-const dataSource = Array.from({ length: 100 }).map<DataType>((_, i) => ({
-  key: i,
-  photo: (
-  <div className="user-image">
-    <Image src="/gallery.png" />
-  </div>),
-  name: `name ${i}`,
-  username: `username ${i}`,
-  country: `country ${i}`,
-  email: `admin${i}@gmail.com`,
-  accountType: `account type ${i}`,
-  action: (<div><Link to={`/user/update/${i}`} style={{color:"orange"}}>Update</Link> <Link to="/user/delete" style={{color:"red"}}>Delete</Link></div>)
-}));
 
 const UserList: React.FC = () => {
   const { styles } = useStyle();
+  const userStore = useUserStore();
 
-  console.log("dataSource", dataSource)
+  const dataSource = userStore.list.map<DataType>((_, i) => ({
+    key: i,
+    photo: (
+    <div className="user-image">
+      <Image src="/gallery.png" />
+    </div>),
+    name: _.firstname + ' ' + _.lastname,
+    username: _.username,
+    country: _.country,
+    email: _.email,
+    accountType: _.accounttype,
+    action: (<div><Link to={`/user/update/${i}`} style={{color:"orange"}}>Update</Link> <Link to="/user/delete" style={{color:"red"}}>Delete</Link></div>)
+  }));
+
+
   return (
     <UserLayout tabName="Records">
       <div className="user-list-option-menu">
@@ -118,6 +123,5 @@ const UserList: React.FC = () => {
     </UserLayout>
   );
 };
-
-
+ 
 export default UserList;
