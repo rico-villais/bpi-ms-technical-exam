@@ -10,18 +10,20 @@ const supabase = createClient(SUPAURL, SUPAKEY);
 
 const app = express();
 
-const corsOption = {
-    origin: '*',
-    methods: [ 'GET', 'POST', ],
-    allowedHeaders: [ 'Content-Type', ],
-};
+// const corsOption = {
+//     origin: '*',
+//     methods: [ 'GET', 'POST', ],
+//     allowedHeaders: [ 'Content-Type', ],
+// };
 
 // using morgan for logs
 app.use(morgan('combined'));
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-app.use(cors(corsOption));
+app.use(cors({
+  origin: ['http://localhost:3001', 'http://localhost:3000'],
+}));
 
 app.post('/login', async (req, res) => {
     console.log('login', req.body);
@@ -43,6 +45,15 @@ app.get('/get-loggedinuser', async (req, res) => {
           } else res.send({ success: false });
     }
     else res.send({ success: false });
+});
+
+app.get('/users', async (req, res) => {
+    console.log("supabase", supabase)
+    const response = await supabase
+    .from('users')
+    .select()
+    console.log("response", response)
+    res.send({ success: true, users: response.data });
 });
 
 app.get('/', (req, res) => {
