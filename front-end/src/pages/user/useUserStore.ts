@@ -1,10 +1,10 @@
 
 import { create } from 'zustand'
 import { default as axios } from 'axios';
-const baseUrl = 'http://localhost:3001';
+const baseUrl = 'localhost:3001';
 
 interface IUSER {
-    photo: string | null;
+    photo?: string | null;
     firstname: string;
     lastname: string;
     username: string;
@@ -33,6 +33,7 @@ type Store = {
     fetchListIfNeeded: () => void;
     fetchList: () => void;
     invalidateList: () => void;
+    create: (newUser:IUSER) => void;
 }
 
 const shouldFetchList = (state: Store) => {
@@ -50,7 +51,7 @@ const userStore = create<Store>((set, get) => ({
     lastUpdated: null,
     didInvalidate: false,
     login: () => {
-        axios.post(`${baseUrl}/login`, { email: "rc.bilyaiz@gmail.com", password: "admin" })
+        axios.post(`http://${baseUrl}/api/login`, { email: "rc.bilyaiz@gmail.com", password: "admin" })
         .then(json => {
             if (json.data && json.data.success) {
                 set({ loggedInUser: true })
@@ -66,7 +67,7 @@ const userStore = create<Store>((set, get) => ({
         }
     },
     fetchList: async () => {
-        const response = await axios.get(`${baseUrl}/users`);
+        const response = await axios.get(`http://${baseUrl}/api/users`);
         console.log("response", response)
         console.log('eyy res', response.data.users)
         if (response.status === 200 && response.data) {
@@ -76,6 +77,21 @@ const userStore = create<Store>((set, get) => ({
         }
     },
     invalidateList: () => set({ didInvalidate: true }),
+    create: (newUser) => {
+        axios.post(`http://${baseUrl}/api/create`, newUser)
+        .then(json => {
+            console.log('eyy', json)
+            if (json.data && json.data.success) {
+                const currentList:IUSER[] = get().list;
+                if (json.data.user) {
+                    currentList.push(json.data.user);
+                }
+                set({ list: currentList });
+                window.location.replace('/user');
+            }
+        })
+        .catch(error => console.log('login err', error));
+    }
 }));
 
 export default userStore;

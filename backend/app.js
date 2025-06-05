@@ -25,7 +25,7 @@ app.use(cors({
   origin: ['http://localhost:3001', 'http://localhost:3000'],
 }));
 
-app.post('/login', async (req, res) => {
+app.post('/api/login', async (req, res) => {
     console.log('login', req.body);
     const { error } = await supabase.auth.signInWithPassword(req.body);
     if (error) res.send({ success: false });
@@ -47,13 +47,20 @@ app.get('/get-loggedinuser', async (req, res) => {
     else res.send({ success: false });
 });
 
-app.get('/users', async (req, res) => {
+app.get('/api/users', async (req, res) => {
     console.log("supabase", supabase)
     const response = await supabase
     .from('users')
     .select()
     console.log("response", response)
     res.send({ success: true, users: response.data });
+});
+
+app.post('/api/create', async (req, res) => {
+    const { statusText} = await supabase
+    .from('users')
+    .insert(req.body)
+    res.send({ success: true, user: statusText === "Created" && req.body });
 });
 
 app.get('/', (req, res) => {
